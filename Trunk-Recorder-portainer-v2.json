@@ -1,0 +1,466 @@
+{
+    "version": "2",
+    "templates": [
+        {
+            "title": "trunk-recorder",
+            "name": "Trunk Recorder",
+            "image": "robotastic/trunk-recorder:latest",
+            "description": "Trunk Recorder made by Robotastic",
+            "categories": [
+                "Recorder"
+            ],
+            "platform": "linux",
+            "restart_policy": "unless-stopped",
+            "volumes": [
+                {
+                    "container": "/var/run/dbus",
+                    "bind": "/var/run/dbus"
+                },
+                {
+                    "container": "/var/run/avahi-daemon/socket",
+                    "bind": "/var/run/avahi-daemon/socket"
+                },
+                {
+                    "container": "/var/run/docker.sock",
+                    "bind": "/var/run/docker.sock"
+                },
+                {
+                    "container": "/audio",
+                    "bind": ""
+                },
+                {
+                    "container": "/app",
+                    "bind": ""
+                }
+            ],
+            "devices": [
+                {
+                    "container": "/dev/bus/usb",
+                    "host": "/dev/bus/usb"
+                },
+                {
+                    "container": "/var/run/dbus",
+                    "host": "/var/run/dbus"
+                }
+            ],
+            "type": 1
+        },
+        {
+            "title": "Trunk-Player-OG",
+            "name": "Trunk-Player-OG",
+            "image": "maxwelldps/trunk-player:rolling",
+            "description": "Trunk Player OG to eventually be replaced by Trunk Player NG in current development",
+            "categories": [
+                "Players"
+            ],
+            "platform": "linux",
+            "note": "Trunk Player OG also requires you have containers running for Both TP_REDIS_OG and TP_DB_OG",
+            "restart_policy": "unless-stopped",
+            "ports": [
+                "7070:80/tcp",
+                "7071:443/tcp"
+            ],
+            "volumes": [
+                {
+                    "container": "/app/trunkplayer/audio_files",
+                    "bind": ""
+                },
+                {
+                    "container": "/config",
+                    "bind": ""
+                }
+            ],
+            "env": [
+                {
+                    "name": "DEBUG",
+                    "default": "True",
+                    "description": "Debug",
+                    "label": "Debug"
+                },
+                {
+                    "name": "SQL_ENGINE",
+                    "default": "django.db.backends.postgresql_psycopg2",
+                    "description": "SQL Engine",
+                    "label": "SQL Engine"
+                },
+                {
+                    "name": "SQL_DATABASE",
+                    "default": "tp_og",
+                    "description": "SQL Database Name",
+                    "label": "SQL Database"
+                },
+                {
+                    "name": "SQL_USER",
+                    "default": "tp_og",
+                    "description": "SQL User Name",
+                    "label": "SQL User"
+                },
+                {
+                    "name": "SQL_PASSWORD",
+                    "default": "",
+                    "description": "SQL User Password",
+                    "label": "SQL User Password"
+                },
+                {
+                    "name": "REDIS_URL",
+                    "default": "redis://tp_redis_OG:6379",
+                    "description": "Redis URL",
+                    "label": "Redis URL"
+                },
+                {
+                    "name": "MIGRATE_DB",
+                    "default": "1",
+                    "description": "Migrate DB",
+                    "label": "Migrate DB"
+                },
+                {
+                    "name": "SECRET_KEY",
+                    "default": "",
+                    "description": "Secret Key",
+                    "label": "Secret Key"
+                },
+                {
+                    "name": "DJANGO_ALLOWED_HOSTS",
+                    "default": "*",
+                    "description": "Django Allowed Hosts",
+                    "label": "Django Allowed Hosts"
+                },
+                {
+                    "name": "TZ",
+                    "default": "America/New_York",
+                    "description": "TimeZone",
+                    "label": "Time Zone"
+                },
+                {
+                    "name": "FORCE_SECURE",
+                    "default": "False",
+                    "description": "Force Secure",
+                    "label": "Force Secure"
+                },
+                {
+                    "name": "ANONYMOUS_TIME",
+                    "default": "0",
+                    "description": "Anonymous Time",
+                    "label": "Anonymous Time"
+                },
+                {
+                    "name": "SITE_TITLE",
+                    "default": "",
+                    "description": "Site Title",
+                    "label": "Site Title"
+                },
+                {
+                    "name": "SITE_EMAIL",
+                    "default": "",
+                    "description": "Site Email",
+                    "label": "Site Email"
+                },
+                {
+                    "name": "ACCESS_TG_RESTRICT",
+                    "default": "False",
+                    "description": "Access TG Restrict",
+                    "label": "Access TG Restrict"
+                },
+                {
+                    "name": "TALKGROUP_RECENT_LENGTH",
+                    "default": "0",
+                    "description": "Talkgroup Recent Length",
+                    "label": "Talkgroup Recent Length"
+                },
+                {
+                    "name": "OPEN_SITE",
+                    "default": "False",
+                    "description": "Open Site",
+                    "label": "Open Site"
+                },
+                {
+                    "name": "ALLOW_GOOGLE_SIGNIN",
+                    "default": "False",
+                    "description": "Allow Google Signin",
+                    "label": "Allow Google Sign In"
+                },
+                {
+                    "name": "FIX_AUDIO_NAME",
+                    "default": "False",
+                    "description": "Fix Audio Name",
+                    "label": "Fix Audio Name"
+                },
+                {
+                    "name": "TRANS_DATETIME_FORMAT",
+                    "default": "%H:%M:%S %m/%d/%Y",
+                    "description": "Trans DateTime Format",
+                    "label": "Trans DateTime Format"
+                },
+                {
+                    "name": "GOOGLE_ANALYTICS_PROPERTY_ID",
+                    "default": "0",
+                    "description": "Google Analytics Property ID",
+                    "label": "Google Analytics Property ID "
+                }
+            ],
+            "type": 1
+        },
+        {
+            "title": "TP_OG_DB",
+            "name": "TP OG Database",
+            "image": "postgres:9.6.24",
+            "description": "Postgres Database for Trunk Player OG",
+            "categories": [
+                "Database"
+            ],
+            "platform": "linux",
+            "note": "This is required to be used with Trunk Player OG",
+            "restart_policy": "unless-stopped",
+            "volumes": [
+                {
+                    "container": "/var/lib/postgresql/data",
+                    "bind": ""
+                }
+            ],
+            "env": [
+                {
+                    "name": "POSTGRES_USER",
+                    "default": "tp_og",
+                    "description": "PostGres User",
+                    "label": "PostGres User"
+                },
+                {
+                    "name": "POSTGRES_PASSWORD",
+                    "default": "",
+                    "description": "ostGres Password",
+                    "label": "PostGres Password"
+                },
+                {
+                    "name": "OSTGRES_DB",
+                    "default": "tp_og_db",
+                    "description": "PostGres DB",
+                    "label": "PostGres DB"
+                }
+            ],
+            "type": 1
+        },
+        {
+            "title": "TP_OG_REDIS",
+            "name": "TP OG Redis",
+            "image": "tp_redis_og",
+            "description": "Trunk Player OG Redis Server Is required by TP OG",
+            "categories": [
+                "Server"
+            ],
+            "platform": "linux",
+            "note": "Trunk Player OG Redis Server Is required by TP OG",
+            "restart_policy": "unless-stopped",
+            "type": 1
+        },
+        {
+            "title": "Trunk_Player_NG",
+            "name": "TP_NG",
+            "image": "trunkplayer/trunkplayer-ng:latest",
+            "description": "Trunk Player Next Gen Requires TP NG TP NG Worker TP NG Beat TP NG DB TP NG Rabbitmq",
+            "categories": [
+                "Player"
+            ],
+            "platform": "linux",
+            "restart_policy": "unless-stopped",
+            "volumes": [
+                {
+                    "container": "/code/static",
+                    "bind": ""
+                },
+                {
+                    "container": "/code/mediafiles",
+                    "bind": ""
+                }
+            ],
+            "env": [
+                {
+                    "name": "DEBUG",
+                    "default": "False",
+                    "description": "Debug",
+                    "label": "Debug"
+                },
+                {
+                    "name": "SEND_TELEMETRY",
+                    "default": "True",
+                    "description": "Send Telemetry",
+                    "label": "Send Telemetry"
+                },
+                {
+                    "name": "FORCE_SECURE",
+                    "default": "True",
+                    "description": "Force Secure",
+                    "label": "Force Secure"
+                },
+                {
+                    "name": "SECRET_KEY",
+                    "default": "",
+                    "description": "Secret Key",
+                    "label": "Secret Key"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "default": "tp-db-ng",
+                    "description": "MySQL Database",
+                    "label": "MySQL Database"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "default": "tp-db-ng",
+                    "description": "MySQL User",
+                    "label": "MySQL User"
+                },
+                {
+                    "name": "MYSQL_PASS",
+                    "default": "",
+                    "description": "MySQL Pass",
+                    "label": "MySQL Pass"
+                },
+                {
+                    "name": "MYSQL_HOST",
+                    "default": "tp-db-ng",
+                    "description": "MySQL Host",
+                    "label": "MySQL Host"
+                },
+                {
+                    "name": "TZ",
+                    "default": "America/New_York",
+                    "description": "TimeZone",
+                    "label": "TimeZone"
+                },
+                {
+                    "name": "CELERY_BROKER_URL",
+                    "default": "amqp://tp-ng:[Pass]@rabbitmq:5672/",
+                    "description": "Celery Broker URL",
+                    "label": "Celery Broker URL"
+                },
+                {
+                    "name": "USE_S3",
+                    "default": "False",
+                    "description": "Use S3",
+                    "label": "Use S3"
+                },
+                {
+                    "name": "S3_ACCESS_KEY_ID",
+                    "default": "",
+                    "description": "S3 Access Key ID",
+                    "label": "S3 Access Key ID"
+                },
+                {
+                    "name": "S3_SECRET_ACCESS_KEY",
+                    "default": "",
+                    "description": "S3 Secret Access Key",
+                    "label": "S3 Secret Access Key"
+                },
+                {
+                    "name": "S3_BUCKET_NAME",
+                    "default": "",
+                    "description": "S3 Bucket Name",
+                    "label": "S3 Bucket Name"
+                },
+                {
+                    "name": "S3_ENDPOINT_URL",
+                    "default": "",
+                    "description": "S3 EndPoint URL",
+                    "label": "S3 EndPoint URL"
+                },
+                {
+                    "name": "AUDIO_DOWNLOAD_HOST",
+                    "default": "",
+                    "description": "Audio Download Host",
+                    "label": "Audio Download Host"
+                },
+                {
+                    "name": "DJANGO_SUPERUSER_EMAIL",
+                    "default": "",
+                    "description": "Django SuperUser Email",
+                    "label": "Django SuperUser Email"
+                },
+                {
+                    "name": "DJANGO_SUPERUSER_PASS",
+                    "default": "",
+                    "description": "Django SuperUser Pass",
+                    "label": "Django SuperUser Pass"
+                }
+            ],
+            "type": 1
+        },
+        {
+            "title": "TP-NG-DB",
+            "name": "TP-NG-DB",
+            "image": "linuxserver/mariadb",
+            "description": "Required for using TP-NG",
+            "categories": [
+                "Database"
+            ],
+            "platform": "linux",
+            "note": "Required for using TP-NG",
+            "restart_policy": "unless-stopped",
+            "ports": [
+                "3306:3306/tcp"
+            ],
+            "volumes": [
+                {
+                    "container": "/config",
+                    "bind": ""
+                }
+            ],
+            "env": [
+                {
+                    "name": "MYSQL_DATABASE",
+                    "default": "tp-db-ng",
+                    "description": "MySQL Database",
+                    "label": "MySQL Database"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "default": "tp-db-ng",
+                    "description": "MySQL User",
+                    "label": "MySQL User"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "default": "",
+                    "description": "MySQL Pass",
+                    "label": "MySQL Pass"
+                }
+            ],
+            "type": 1
+        },
+        {
+            "title": "RabbitMQ",
+            "name": "RabbitMQ",
+            "image": "rabbitmq:management",
+            "description": "RabbitMQ Required for TP-NG",
+            "categories": [
+                "API"
+            ],
+            "platform": "linux",
+            "note": "RabbitMQ Required for TP-NG",
+            "restart_policy": "unless-stopped",
+            "ports": [
+                "15672:15672/tcp"
+            ],
+            "volumes": [
+                {
+                    "container": "/config",
+                    "bind": ""
+                }
+            ],
+            "env": [
+                {
+                    "name": "RABBITMQ_DEFAULT_USER",
+                    "default": "tp-ng",
+                    "description": "RabbitMQ User",
+                    "label": "RabbitMQ User"
+                },
+                {
+                    "name": "RABBITQ_DEFAULT_PASSWORD",
+                    "default": "",
+                    "description": "RabbitMQ Pass",
+                    "label": "RabbitMQ Pass"
+                }
+            ],
+            "type": 1
+        }
+    ]
+}
