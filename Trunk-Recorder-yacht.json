@@ -1,7 +1,7 @@
 [
   {
-    "title": "Trunk-Recorder",
-    "name": "Trunk Recorder",
+    "title": "Trunk Recorder",
+    "name": "Trunk_Recorder",
     "image": "robotastic/trunk-recorder:latest",
     "description": "Trunk Recorder made by Robotastic",
     "categories": [
@@ -13,52 +13,43 @@
     "ports": [],
     "volumes": [
       {
-        "container": "/var/run/dbus",
-        "bind": "!dbus"
-      },
-      {
-        "container": "/var/run/avahi-daemon/socket",
-        "bind": "!avahi"
-      },
-      {
-        "container": "/var/run/docker.sock",
-        "bind": "!sock"
+        "container": "/app",
+        "bind": "!config"
       },
       {
         "container": "/audio",
         "bind": "!sdraudio"
       },
       {
-        "container": "/app",
-        "bind": "!config"
+        "container": "/var/run/dbus",
+        "bind": "/var/run/dbus"
+      },
+      {
+        "container": "/var/run/avahi-daemon/socket",
+        "bind": "/var/run/avahi-daemon/socket"
+      },
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
       }
     ],
     "env": [],
     "command": [],
-    "devices": [
-      {
-        "container": "/dev/bus/usb",
-        "host": "/dev/bus/usb"
-      },
-      {
-        "container": "/var/run/dbus",
-        "host": "/var/run/dbus"
-      }
-    ],
+    "devices": [],
     "labels": [],
     "sysctls": [],
     "cap_add": []
   },
   {
-    "title": "Trunk-Player-OG",
-    "name": "Trunk Player OG",
+    "title": "Trunk Player OG",
+    "name": "Trunk_Player_OG",
     "image": "maxwelldps/trunk-player:rolling",
-    "description": "Trunk Player OG to eventually be replaced by Trunk Player NG in current development",
+    "description": "Trunk Player OG to eventually be replaced by Trunk Player NG in current development. Trunk Player OG also requires you have containers running for Both TP_OG_Redis and TP_OG_DB",
     "categories": [
       "Players"
     ],
     "platform": "linux",
-    "note": "Trunk Player OG also requires you have containers running for Both TP_REDIS_OG and TP_DB_OG",
+    "note": "Trunk Player OG also requires you have containers running for Both TP_OG_Redis and TP_OG_DB",
     "restart_policy": "unless-stopped",
     "ports": [
       {
@@ -105,13 +96,13 @@
       },
       {
         "name": "SQL_PASSWORD",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "SQL User Password",
         "label": "SQL User Password"
       },
       {
         "name": "REDIS_URL",
-        "default": "redis://tp_redis_OG:6379",
+        "default": "redis://tp_OG_Redis:6379",
         "description": "Redis URL",
         "label": "Redis URL"
       },
@@ -123,7 +114,7 @@
       },
       {
         "name": "SECRET_KEY",
-        "default": "",
+        "default": "Sup3rS3cretK3y",
         "description": "Secret Key",
         "label": "Secret Key"
       },
@@ -153,13 +144,13 @@
       },
       {
         "name": "SITE_TITLE",
-        "default": "",
+        "default": "Trunk Player OG",
         "description": "Site Title",
         "label": "Site Title"
       },
       {
         "name": "SITE_EMAIL",
-        "default": "",
+        "default": "Admin@Local",
         "description": "Site Email",
         "label": "Site Email"
       },
@@ -182,12 +173,6 @@
         "label": "Open Site"
       },
       {
-        "name": "ALLOW_GOOGLE_SIGNIN",
-        "default": "False",
-        "description": "Allow Google Signin",
-        "label": "Allow Google Sign In"
-      },
-      {
         "name": "FIX_AUDIO_NAME",
         "default": "False",
         "description": "Fix Audio Name",
@@ -198,6 +183,12 @@
         "default": "%H:%M:%S %m/%d/%Y",
         "description": "Trans DateTime Format",
         "label": "Trans DateTime Format"
+      },
+      {
+        "name": "ALLOW_GOOGLE_SIGNIN",
+        "default": "False",
+        "description": "Allow Google Signin",
+        "label": "Allow Google Sign In"
       },
       {
         "name": "GOOGLE_ANALYTICS_PROPERTY_ID",
@@ -213,15 +204,15 @@
     "cap_add": []
   },
   {
-    "title": "TP_OG_DB",
-    "name": "TP OG Database",
+    "title": "Trunk Player OG Database",
+    "name": "TP_OG_DB",
     "image": "postgres:9.6.24",
-    "description": "Postgres Database for Trunk Player OG",
+    "description": "Postgres Database for TP_OG",
     "categories": [
       "Databases"
     ],
     "platform": "linux",
-    "note": "This is required to be used with Trunk Player OG",
+    "note": "This is required to be used with TP_OG",
     "restart_policy": "unless-stopped",
     "ports": [],
     "volumes": [
@@ -239,12 +230,12 @@
       },
       {
         "name": "POSTGRES_PASSWORD",
-        "default": "",
-        "description": "ostGres Password",
+        "default": "Ch@ng3M3",
+        "description": "PostGres Password",
         "label": "PostGres Password"
       },
       {
-        "name": "OSTGRES_DB",
+        "name": "POSTGRES_DB",
         "default": "tp_og_db",
         "description": "PostGres DB",
         "label": "PostGres DB"
@@ -257,15 +248,15 @@
     "cap_add": []
   },
   {
-    "title": "TP_OG_REDIS",
-    "name": "TP OG Redis",
+    "title": "Trunk Player OG REDIS",
+    "name": "TP_OG_Redis",
     "image": "redis",
-    "description": "Trunk Player OG Redis Server Is required by TP OG",
+    "description": "Trunk Player OG Redis Server Is required by TP_OG",
     "categories": [
       "Required Helpers"
     ],
     "platform": "linux",
-    "note": "Trunk Player OG Redis Server Is required by TP OG",
+    "note": "Trunk Player OG Redis Server Is required by TP_OG",
     "restart_policy": "unless-stopped",
     "ports": [],
     "volumes": [],
@@ -277,15 +268,15 @@
     "cap_add": []
   },
   {
-    "title": "Trunk_Player_NG",
+    "title": "Trunk Player Next Gen",
     "name": "TP_NG",
     "image": "trunkplayer/trunkplayer-ng:latest",
-    "description": "Trunk Player Next Gen Requires TP NG TP NG Worker TP NG Beat TP NG DB TP NG Rabbitmq",
+    "description": "Trunk Player Next Gen Requires TP_NG TP_NG_Worker TP_NG_Pulse TP_NG_DB TP_NG_RMQ",
     "categories": [
       "Players"
     ],
     "platform": "linux",
-    "note": "",
+    "note": "Trunk Player Next Gen Requires TP_NG TP_NG_Worker TP_NG_Pulse TP_NG_DB TP_NG_RMQ",
     "restart_policy": "unless-stopped",
     "ports": [],
     "volumes": [
@@ -319,7 +310,7 @@
       },
       {
         "name": "SECRET_KEY",
-        "default": "",
+        "default": "Sup3rS3cretK3y",
         "description": "Secret Key",
         "label": "Secret Key"
       },
@@ -337,7 +328,7 @@
       },
       {
         "name": "MYSQL_PASS",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "MySQL Pass",
         "label": "MySQL Pass"
       },
@@ -355,7 +346,7 @@
       },
       {
         "name": "CELERY_BROKER_URL",
-        "default": "amqp://tp-ng:[Pass]@rabbitmq:5672/",
+        "default": "amqp://tp-ng:Ch@ng3M3@TP_NG_RMQ:5672/",
         "description": "Celery Broker URL",
         "label": "Celery Broker URL"
       },
@@ -397,13 +388,13 @@
       },
       {
         "name": "DJANGO_SUPERUSER_EMAIL",
-        "default": "",
+        "default": "Admin@local",
         "description": "Django SuperUser Email",
         "label": "Django SuperUser Email"
       },
       {
         "name": "DJANGO_SUPERUSER_PASS",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "Django SuperUser Pass",
         "label": "Django SuperUser Pass"
       }
@@ -415,15 +406,15 @@
     "cap_add": []
   },
   {
-    "title": "Trunk_Player_NG_Worker",
-    "name": "TP NG Worker",
+    "title": "Trunk Player NG Worker",
+    "name": "TP_NG_Worker",
     "image": "trunkplayer/trunkplayer-ng:latest",
-    "description": "Trunk Player Next Gen Requires TP NG TP NG Worker TP NG Beat TP NG DB TP NG Rabbitmq",
+    "description": "Trunk Player Next Gen Requires TP_NG TP_NG_Worker TP_NG_Pulse TP_NG_DB TP_NG_RMQ",
     "categories": [
       "Required Helpers"
     ],
     "platform": "linux",
-    "note": "",
+    "note": "Trunk Player Next Gen Requires TP_NG TP_NG_Worker TP_NG_Pulse TP_NG_DB TP_NG_RMQ",
     "restart_policy": "unless-stopped",
     "ports": [],
     "volumes": [
@@ -493,7 +484,7 @@
       },
       {
         "name": "CELERY_BROKER_URL",
-        "default": "amqp://tp-ng:[Pass]@rabbitmq:5672/",
+        "default": "amqp://tp-ng:Ch@ng3M3@TP_NG_RMQ:5672/",
         "description": "Celery Broker URL",
         "label": "Celery Broker URL"
       },
@@ -535,13 +526,13 @@
       },
       {
         "name": "DJANGO_SUPERUSER_EMAIL",
-        "default": "",
+        "default": "admin@local",
         "description": "Django SuperUser Email",
         "label": "Django SuperUser Email"
       },
       {
         "name": "DJANGO_SUPERUSER_PASS",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "Django SuperUser Pass",
         "label": "Django SuperUser Pass"
       }
@@ -553,15 +544,15 @@
     "cap_add": []
   },
   {
-    "title": "Trunk_Player_NG_Beat",
-    "name": "TP NG Beat",
+    "title": "Trunk Player NG Pulse",
+    "name": "TP_NG_Pulse",
     "image": "trunkplayer/trunkplayer-ng:latest",
-    "description": "Trunk Player Next Gen Requires TP NG TP NG Worker TP NG Beat TP NG DB TP NG Rabbitmq",
+    "description": "Trunk Player Next Gen Requires TP_NG TP_NG_Worker TP_NG_Pulse TP_NG_DB TP_NG Rabbitmq",
     "categories": [
       "Required Helpers"
     ],
     "platform": "linux",
-    "note": "",
+    "note": "Trunk Player Next Gen Requires TP_NG TP_NG_Worker TP_NG_Pulse TP_NG_DB TP_NG Rabbitmq",
     "restart_policy": "unless-stopped",
     "ports": [],
     "volumes": [
@@ -595,7 +586,7 @@
       },
       {
         "name": "SECRET_KEY",
-        "default": "",
+        "default": "Sup3rS3Cr3tK3y",
         "description": "Secret Key",
         "label": "Secret Key"
       },
@@ -613,7 +604,7 @@
       },
       {
         "name": "MYSQL_PASS",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "MySQL Pass",
         "label": "MySQL Pass"
       },
@@ -631,7 +622,7 @@
       },
       {
         "name": "CELERY_BROKER_URL",
-        "default": "amqp://tp-ng:[Pass]@rabbitmq:5672/",
+        "default": "amqp://tp-ng:Ch@ng3M3@TP_NG_RMQ:5672/",
         "description": "Celery Broker URL",
         "label": "Celery Broker URL"
       },
@@ -673,13 +664,13 @@
       },
       {
         "name": "DJANGO_SUPERUSER_EMAIL",
-        "default": "",
+        "default": "admin@local",
         "description": "Django SuperUser Email",
         "label": "Django SuperUser Email"
       },
       {
         "name": "DJANGO_SUPERUSER_PASS",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "Django SuperUser Pass",
         "label": "Django SuperUser Pass"
       }
@@ -691,10 +682,10 @@
     "cap_add": []
   },
   {
-    "title": "TP-NG-DB",
-    "name": "TP NG DB",
+    "title": "Trunk Player NG Database",
+    "name": "TP_NG_DB",
     "image": "linuxserver/mariadb",
-    "description": "Required for using TP-NG",
+    "description": "Required for using TP_NG",
     "categories": [
       "Databases"
     ],
@@ -727,7 +718,7 @@
       },
       {
         "name": "MYSQL_PASSWORD",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "MySQL Pass",
         "label": "MySQL Pass"
       }
@@ -740,7 +731,7 @@
   },
   {
     "title": "RabbitMQ",
-    "name": "RabbitMQ",
+    "name": "TP_NG_RMQ",
     "image": "rabbitmq:management",
     "description": "RabbitMQ Required for TP-NG",
     "categories": [
@@ -767,7 +758,7 @@
       },
       {
         "name": "RABBITQ_DEFAULT_PASSWORD",
-        "default": "",
+        "default": "Ch@ng3M3",
         "description": "RabbitMQ Pass",
         "label": "RabbitMQ Pass"
       }
