@@ -278,7 +278,7 @@
       "image": "tp_redis_og",
       "description": "Trunk Player OG Redis Server Is required by TP OG",
       "categories": [
-        "Server"
+        "Required Helpers"
       ],
       "platform": "linux",
       "note": "Trunk Player OG Redis Server Is required by TP OG",
@@ -433,6 +433,286 @@
       "cap_add": []
     },
     {
+      "title": "Trunk_Player_NG_Worker",
+      "name": "TP_NG_Worker",
+      "image": "trunkplayer/trunkplayer-ng:latest",
+      "description": "Trunk Player Next Gen Requires TP NG TP NG Worker TP NG Beat TP NG DB TP NG Rabbitmq",
+      "categories": [
+        "Required Helpers"
+      ],
+      "platform": "linux",
+      "note": "",
+      "restart_policy": "unless-stopped",
+      "ports": [],
+      "volumes": [
+        {
+          "container": "/code/static",
+          "bind": "",
+          "variable": "!Config"
+        },
+        {
+          "container": "/code/mediafiles",
+          "bind": "",
+          "variable": "!sdraudio"
+        }
+      ],
+      "env": [
+        {
+          "name": "DEBUG",
+          "default": "False",
+          "description": "Debug",
+          "label": "Debug"
+        },
+        {
+          "name": "SEND_TELEMETRY",
+          "default": "True",
+          "description": "Send Telemetry",
+          "label": "Send Telemetry"
+        },
+        {
+          "name": "FORCE_SECURE",
+          "default": "True",
+          "description": "Force Secure",
+          "label": "Force Secure"
+        },
+        {
+          "name": "SECRET_KEY",
+          "default": "",
+          "description": "Secret Key",
+          "label": "Secret Key"
+        },
+        {
+          "name": "MYSQL_DATABASE",
+          "default": "tp-db-ng",
+          "description": "MySQL Database",
+          "label": "MySQL Database"
+        },
+        {
+          "name": "MYSQL_USER",
+          "default": "tp-db-ng",
+          "description": "MySQL User",
+          "label": "MySQL User"
+        },
+        {
+          "name": "MYSQL_PASS",
+          "default": "",
+          "description": "MySQL Pass",
+          "label": "MySQL Pass"
+        },
+        {
+          "name": "MYSQL_HOST",
+          "default": "tp-db-ng",
+          "description": "MySQL Host",
+          "label": "MySQL Host"
+        },
+        {
+          "name": "TZ",
+          "default": "America/New_York",
+          "description": "TimeZone",
+          "label": "TimeZone"
+        },
+        {
+          "name": "CELERY_BROKER_URL",
+          "default": "amqp://tp-ng:[Pass]@rabbitmq:5672/",
+          "description": "Celery Broker URL",
+          "label": "Celery Broker URL"
+        },
+        {
+          "name": "USE_S3",
+          "default": "False",
+          "description": "Use S3",
+          "label": "Use S3"
+        },
+        {
+          "name": "S3_ACCESS_KEY_ID",
+          "default": "",
+          "description": "S3 Access Key ID",
+          "label": "S3 Access Key ID"
+        },
+        {
+          "name": "S3_SECRET_ACCESS_KEY",
+          "default": "",
+          "description": "S3 Secret Access Key",
+          "label": "S3 Secret Access Key"
+        },
+        {
+          "name": "S3_BUCKET_NAME",
+          "default": "",
+          "description": "S3 Bucket Name",
+          "label": "S3 Bucket Name"
+        },
+        {
+          "name": "S3_ENDPOINT_URL",
+          "default": "",
+          "description": "S3 EndPoint URL",
+          "label": "S3 EndPoint URL"
+        },
+        {
+          "name": "AUDIO_DOWNLOAD_HOST",
+          "default": "",
+          "description": "Audio Download Host",
+          "label": "Audio Download Host"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_EMAIL",
+          "default": "",
+          "description": "Django SuperUser Email",
+          "label": "Django SuperUser Email"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_PASS",
+          "default": "",
+          "description": "Django SuperUser Pass",
+          "label": "Django SuperUser Pass"
+        }
+      ],
+      "command": [],
+      "devices": [],
+      "labels": [],
+      "sysctls": [],
+      "cap_add": []
+    },
+    {
+      "title": "Trunk_Player_NG_Beat",
+      "name": "TP_NG_Beat",
+      "image": "trunkplayer/trunkplayer-ng:latest",
+      "description": "Trunk Player Next Gen Requires TP NG TP NG Worker TP NG Beat TP NG DB TP NG Rabbitmq",
+      "categories": [
+        "Required Helpers"
+      ],
+      "platform": "linux",
+      "note": "",
+      "restart_policy": "unless-stopped",
+      "ports": [],
+      "volumes": [
+        {
+          "container": "/code/static",
+          "bind": "",
+          "variable": "!Config"
+        },
+        {
+          "container": "/code/mediafiles",
+          "bind": "",
+          "variable": "!sdraudio"
+        }
+      ],
+      "env": [
+        {
+          "name": "DEBUG",
+          "default": "False",
+          "description": "Debug",
+          "label": "Debug"
+        },
+        {
+          "name": "SEND_TELEMETRY",
+          "default": "True",
+          "description": "Send Telemetry",
+          "label": "Send Telemetry"
+        },
+        {
+          "name": "FORCE_SECURE",
+          "default": "True",
+          "description": "Force Secure",
+          "label": "Force Secure"
+        },
+        {
+          "name": "SECRET_KEY",
+          "default": "",
+          "description": "Secret Key",
+          "label": "Secret Key"
+        },
+        {
+          "name": "MYSQL_DATABASE",
+          "default": "tp-db-ng",
+          "description": "MySQL Database",
+          "label": "MySQL Database"
+        },
+        {
+          "name": "MYSQL_USER",
+          "default": "tp-db-ng",
+          "description": "MySQL User",
+          "label": "MySQL User"
+        },
+        {
+          "name": "MYSQL_PASS",
+          "default": "",
+          "description": "MySQL Pass",
+          "label": "MySQL Pass"
+        },
+        {
+          "name": "MYSQL_HOST",
+          "default": "tp-db-ng",
+          "description": "MySQL Host",
+          "label": "MySQL Host"
+        },
+        {
+          "name": "TZ",
+          "default": "America/New_York",
+          "description": "TimeZone",
+          "label": "TimeZone"
+        },
+        {
+          "name": "CELERY_BROKER_URL",
+          "default": "amqp://tp-ng:[Pass]@rabbitmq:5672/",
+          "description": "Celery Broker URL",
+          "label": "Celery Broker URL"
+        },
+        {
+          "name": "USE_S3",
+          "default": "False",
+          "description": "Use S3",
+          "label": "Use S3"
+        },
+        {
+          "name": "S3_ACCESS_KEY_ID",
+          "default": "",
+          "description": "S3 Access Key ID",
+          "label": "S3 Access Key ID"
+        },
+        {
+          "name": "S3_SECRET_ACCESS_KEY",
+          "default": "",
+          "description": "S3 Secret Access Key",
+          "label": "S3 Secret Access Key"
+        },
+        {
+          "name": "S3_BUCKET_NAME",
+          "default": "",
+          "description": "S3 Bucket Name",
+          "label": "S3 Bucket Name"
+        },
+        {
+          "name": "S3_ENDPOINT_URL",
+          "default": "",
+          "description": "S3 EndPoint URL",
+          "label": "S3 EndPoint URL"
+        },
+        {
+          "name": "AUDIO_DOWNLOAD_HOST",
+          "default": "",
+          "description": "Audio Download Host",
+          "label": "Audio Download Host"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_EMAIL",
+          "default": "",
+          "description": "Django SuperUser Email",
+          "label": "Django SuperUser Email"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_PASS",
+          "default": "",
+          "description": "Django SuperUser Pass",
+          "label": "Django SuperUser Pass"
+        }
+      ],
+      "command": [],
+      "devices": [],
+      "labels": [],
+      "sysctls": [],
+      "cap_add": []
+    }, 
+    {
       "title": "TP-NG-DB",
       "name": "TP-NG-DB",
       "image": "linuxserver/mariadb",
@@ -490,7 +770,7 @@
       "image": "rabbitmq:management",
       "description": "RabbitMQ Required for TP-NG",
       "categories": [
-        "API"
+        "Required Helpers"
       ],
       "platform": "linux",
       "note": "RabbitMQ Required for TP-NG",
